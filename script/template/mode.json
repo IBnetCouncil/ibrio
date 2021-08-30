@@ -1,0 +1,14 @@
+{
+  "EModeType::MODE_SERVER": {
+    "usage": "ibrio-server (OPTIONS)",
+    "desc": "Run ibrio server"
+  },
+  "EModeType::MODE_CONSOLE": {
+    "usage": "ibrio-cli (OPTIONS) COMMAND",
+    "desc": "Run ibrio RPC client"
+  },
+  "EModeType::MODE_MINER": {
+    "usage": "ibrio-miner (OPTIONS)",
+    "desc": "Run ibrio miner"
+  }
+}

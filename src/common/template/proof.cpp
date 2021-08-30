@@ -1,0 +1,117 @@
+// Copyright (c) 2019-2021 The Ibrio developers
+// Distributed under the MIT/X11 software license, see the accompanying
+// file COPYING or http://www.opensource.org/licenses/mit-license.php.
+
+#include "proof.h"
+
+#include "key.h"
+#include "rpc/auto_protocol.h"
+#include "template.h"
+#include "util.h"
+
+using namespace std;
+using namespace xengine;
+using namespace ibrio::crypto;
+
+//////////////////////////////
+// CTemplateProof
+
+CTemplateProof::CTemplateProof(const ibrio::crypto::CPubKey keyMintIn, const CDestination& destSpendIn)
+  : CTemplate(TEMPLATE_PROOF), keyMint(keyMintIn), destSpend(destSpendIn)
+{
+}
+
+CTemplateProof* CTemplateProof::clone() const
+{
+    return new CTemplateProof(*this);
+}
+
+bool CTemplateProof::GetSignDestination(const CTransaction& tx, const uint256& hashFork, int nHeight, const std::vector<uint8>& vchSig,
+                                        std::set<CDestination>& setSubDest, std::vector<uint8>& vchSubSig) const
+{
+    if (!CTemplate::GetSignDestination(tx, hashFork, nHeight, vchSig, setSubDest, vchSubSig))
+    {
+        return false;
+    }
+
+    setSubDest.clear();
+    setSubDest.insert(destSpend);
+    return true;
+}
+
+void CTemplateProof::GetTemplateData(ibrio::rpc::CTemplateResponse& obj, CDestination&& destInstance) const
+{
+    obj.mint.strMint = keyMint.ToString();
+    obj.mint.strSpent = (destInstance = destSpend).ToString();
+}
+
+bool CTemplateProof::ValidateParam() const
+{
+    if (!keyMint)
+    {
+        return false;
+    }
+
+    if (!IsTxSpendable(destSpend))
+    {
+        return false;
+    }
+
+    return true;
+}
+
+bool CTemplateProof::SetTemplateData(const vector<uint8>& vchDataIn)
+{
+    CIDataStream is(vchDataIn);
+    try
+    {
+        is >> keyMint >> destSpend;
+    }
+    catch (exception& e)
+    {
+        StdError(__PRETTY_FUNCTION__, e.what());
+        return false;
+    }
+
+    return true;
+}
+
+bool CTemplateProof::SetTemplateData(const ibrio::rpc::CTemplateRequest& obj, CDestination&& destInstance)
+{
+    if (obj.strType != GetTypeName(TEMPLATE_PROOF))
+    {
+        return false;
+    }
+
+    if (!destInstance.SetPubKey(obj.mint.strMint))
+    {
+        return false;
+    }
+    keyMint = destInstance.GetPubKey();
+
+    if (!destInstance.ParseString(obj.mint.strSpent))
+    {
+        return false;
+    }
+    destSpend = destInstance;
+
+    return true;
+}
+
+void CTemplateProof::BuildTemplateData()
+{
+    vchData.clear();
+    CODataStream os(vchData);
+    os << keyMint << destSpend;
+}
+
+bool CTemplateProof::VerifyTxSignature(const uint256& hash, const uint16 nType, const uint256& hashAnchor, const CDestination& destTo,
+                                       const vector<uint8>& vchSig, const int32 nForkHeight, bool& fCompleted) const
+{
+    return destSpend.VerifyTxSignature(hash, nType, hashAnchor, destTo, vchSig, nForkHeight, fCompleted);
+}
+
+bool CTemplateProof::VerifyBlockSignature(const uint256& hash, const vector<uint8>& vchSig) const
+{
+    return keyMint.Verify(hash, vchSig);
+}
