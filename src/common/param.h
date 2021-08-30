@@ -19,7 +19,7 @@ inline bool MoneyRange(int64 nValue)
 {
     return (nValue >= 0 && nValue <= MAX_MONEY);
 }
-static const int64 MAX_REWARD_MONEY = 10000 * COIN;
+static const int64 MAX_REWARD_MONEY = 1000 * 10000 * COIN;
 inline bool RewardRange(int64 nValue)
 {
     return (nValue >= 0 && nValue <= MAX_REWARD_MONEY);
@@ -65,7 +65,7 @@ const double MORTGAGE_DECAY_QUANTITY = 0.5;        // decay quantity
 // CORE
 static const int64 MAX_CLOCK_DRIFT = 80;
 
-static const int64 NPSP_TOKEN_INIT = 80000 * 10000 * COIN;
+static const int64 NPSP_TOKEN_INIT = 20000 * 10000 * COIN;
 
 static const int64 DELEGATE_PROOF_OF_STAKE_ENROLL_MINIMUM_AMOUNT = 1000 * 10000 * COIN;
 #define DELEGATE_PROOF_OF_STAKE_ENROLL_MAXIMUM_AMOUNT GET_PARAM((10000 * 10000 * COIN), NPSP_TOKEN_INIT)
