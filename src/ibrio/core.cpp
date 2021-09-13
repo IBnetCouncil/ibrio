@@ -89,20 +89,15 @@ const uint256& CCoreProtocol::GetGenesisBlockHash()
     return hashGenesisBlock;
 }
 
-/*
-Address: 1231kgws0rhjtfewv57jegfe5bp4dncax60szxk8f4y546jsfkap3t5ws
-PubKey : ac9a2f4b438a270fcdfe33305db1da885dc53de8e4299bbba765c4207338c310
-Secret : 9ae89671cc1a74e9e404a16982ae48d21c56d4ad8278bc9755235a68fc841271
-*/
 void CCoreProtocol::GetGenesisBlock(CBlock& block)
 {
-    const CDestination destOwner = CDestination(ibrio::crypto::CPubKey(uint256("ac9a2f4b438a270fcdfe33305db1da885dc53de8e4299bbba765c4207338c310")));
+    const CDestination destOwner = CAddress("100v1wnn3cprx7n033gfzdme8akcgqgttc2k4rj19dwk9pgvjt6rz294v");
 
     block.SetNull();
 
     block.nVersion = 1;
     block.nType = CBlock::BLOCK_GENESIS;
-    block.nTimeStamp = 1621322325;
+    block.nTimeStamp = 1631520000;
     block.hashPrev = 0;
 
     CTransaction& tx = block.txMint;
@@ -1805,22 +1800,15 @@ CTestNetCoreProtocol::CTestNetCoreProtocol()
 {
 }
 
-/*
-Address: 1549pyzf8dhx7r4x40k5j80f12btkpqfprjp134bcgcrjn963nzsx57xb
-PubKey : f3afc3a42a31836c9111acc4f65d3bf512e10124cb04a4137c7a6ce87d6f1329
-Secret : 141a6728ded4f83f767ea770e3582be497c5088fcc3b9ca248751887534f5197
-*/
 void CTestNetCoreProtocol::GetGenesisBlock(CBlock& block)
 {
-    using namespace boost::posix_time;
-    using namespace boost::gregorian;
-    const CDestination destOwner = CDestination(ibrio::crypto::CPubKey(uint256("f3afc3a42a31836c9111acc4f65d3bf512e10124cb04a4137c7a6ce87d6f1329")));
+    const CDestination destOwner = CAddress("1kv4rs2z8kh86p9bt9tm5fpbqe31za3pxrw2271kxwbh4xvgkr1dtsvmb");
 
     block.SetNull();
 
     block.nVersion = 1;
     block.nType = CBlock::BLOCK_GENESIS;
-    block.nTimeStamp = 1621322325;
+    block.nTimeStamp = 1631520000;
     block.hashPrev = 0;
 
     CTransaction& tx = block.txMint;

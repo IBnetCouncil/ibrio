@@ -34,7 +34,7 @@ static const unsigned int MAX_TX_SIZE = (MAX_BLOCK_SIZE / 20);
 static const unsigned int MAX_SIGNATURE_SIZE = 2048;
 static const unsigned int MAX_TX_INPUT_COUNT = (MAX_TX_SIZE - MAX_SIGNATURE_SIZE - 4) / 33;
 
-static const unsigned int BLOCK_TARGET_SPACING = 10;  //60; // 1-minute block spacing
+static const unsigned int BLOCK_TARGET_SPACING = 10;  //60;
 static const unsigned int EXTENDED_BLOCK_SPACING = 1; //2;
 static const unsigned int PROOF_OF_WORK_BLOCK_SPACING = BLOCK_TARGET_SPACING;
 
@@ -121,12 +121,12 @@ inline int64 CalcInvestReward(const uint32 nCycle, const int64 nInvestAmount)
 }
 
 static const std::map<uint256, std::map<int, uint256>> mapCheckPointsList_Mainnet = {
-    { uint256("00000000312731792b03593ba4a4fa476f8db31b8a02ee45a2c5a7acf9112bbf"), //Genesis
-      { { 0, uint256("00000000312731792b03593ba4a4fa476f8db31b8a02ee45a2c5a7acf9112bbf") } } }
+    { uint256("00000000ebdf676056918ba471f42edaad524017478ac9bb59d4b9f74e421ac5"), //Genesis
+      { { 0, uint256("00000000ebdf676056918ba471f42edaad524017478ac9bb59d4b9f74e421ac5") } } }
 };
 static const std::map<uint256, std::map<int, uint256>> mapCheckPointsList_Testnet = {
-    { uint256("00000000a8b00ba26899af9bab3c44898976102504972b71bd7298d99420719b"), //Genesis
-      { { 0, uint256("00000000a8b00ba26899af9bab3c44898976102504972b71bd7298d99420719b") } } }
+    { uint256("000000005a42794948e950b5721a43ce444a03286257fb9a144b046c867a7edf"), //Genesis
+      { { 0, uint256("000000005a42794948e950b5721a43ce444a03286257fb9a144b046c867a7edf") } } }
 };
 #define mapCheckPointsList GET_PARAM(mapCheckPointsList_Mainnet, mapCheckPointsList_Testnet)
 
